@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Healthcare Hustlers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F0F5FA] text-[#334155] antialiased">
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-bold text-[#1e293b]">⚙️ Admin Panel</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="loginStatus" class="text-sm text-gray-400">Not logged in</span>
+                <button id="logoutBtn" onclick="logout()" class="hidden text-sm text-red-600 hover:text-red-700 font-medium">Logout</button>
+                <a href="/" class="text-sm text-[#046bd2] hover:underline">&larr; Back to Store</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== LOGIN SECTION ========== -->
+    <section id="loginSection" class="py-20 px-4">
+        <div class="max-w-sm mx-auto bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-[#046bd2]/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg class="w-6 h-6 text-[#046bd2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-[#1e293b]">Admin Login</h2>
+                <p class="text-sm text-gray-500 mt-1">Enter password to access submissions</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="adminPassword" placeholder="Password"
+                       class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#046bd2] focus:ring-2 focus:ring-[#046bd2]/20 outline-none transition-all"
+                       onkeydown="if(event.key==='Enter') login()" />
+                <button onclick="login()" class="w-full bg-[#046bd2] hover:bg-[#045cb4] text-white font-semibold py-3 rounded-xl btn-hover">
+                    Login
+                </button>
+                <p id="loginError" class="text-red-500 text-sm text-center hidden">Invalid password</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== DASHBOARD ========== -->
+    <section id="dashboardSection" class="py-8 px-4 sm:px-6 lg:px-8 hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#1e293b]">Submissions</h2>
+                    <p class="text-sm text-gray-500 mt-1">Review and approve payment verification requests</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="refreshData()" class="bg-white border border-gray-200 hover:border-[#046bd2] text-[#334155] font-medium px-4 py-2 rounded-xl text-sm btn-hover inline-flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-2xl font-bold text-[#1e293b]" id="totalCount">0</p>
+                    <p class="text-sm text-gray-500">Total</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-2xl font-bold text-amber-600" id="pendingCount">0</p>
+                    <p class="text-sm text-gray-500">Pending</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-2xl font-bold text-emerald-600" id="approvedCount">0</p>
+                    <p class="text-sm text-gray-500">Approved</p>
+                </div>
+                <div class="bg-white rounded-xl p-4 border border-gray-100">
+                    <p class="text-2xl font-bold text-red-600" id="rejectedCount">0</p>
+                    <p class="text-sm text-gray-500">Rejected</p>
+                </div>
+            </div>
+
+            <!-- Email notification note -->
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 text-sm text-blue-800">
+                <p class="font-medium">📧 Email notifications coming soon — share this link manually for now.</p>
+                <p class="text-blue-600 text-xs mt-1">Approve a user, then use the "Manual Share" button to copy their download link to your clipboard.</p>
+            </div>
+
+            <!-- Submissions Table -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100">
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Date</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Name</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Email</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">WhatsApp</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Transaction ID</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Status</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissionsBody">
+                            <tr><td colspan="7" class="text-center py-8 text-gray-400">Log in to view submissions</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STUDENT IDS SECTION ========== -->
+    <section id="studentIdsSection" class="py-8 px-4 sm:px-6 lg:px-8 hidden">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-[#1e293b]">🎓 Student IDs</h2>
+                    <p class="text-sm text-gray-500 mt-1">Manage student discount IDs</p>
+                </div>
+                <button onclick="refreshStudentIds()" class="bg-white border border-gray-200 hover:border-[#046bd2] text-[#334155] font-medium px-4 py-2 rounded-xl text-sm btn-hover inline-flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    Refresh
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100">
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Student ID</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Status</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Created</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Used At</th>
+                                <th class="text-left px-4 py-3 font-semibold text-[#1e293b]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentIdsBody">
+                            <tr><td colspan="5" class="text-center py-8 text-gray-400">Log in to view student IDs</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-[#1e293b] text-gray-400 py-8 px-4 mt-12">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="text-sm">&copy; 2025 Healthcare Hustlers. Admin Panel</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = '';
+        let token = sessionStorage.getItem('adminToken') || '';
+        let submissions = [];
+
+        function getAuthHeaders() {
+            return {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+        }
+
+        function login() {
+            const password = document.getElementById('adminPassword').value.trim();
+            const errorEl = document.getElementById('loginError');
+
+            if (!password) {
+                errorEl.classList.remove('hidden');
+                errorEl.textContent = 'Please enter a password';
+                return;
+            }
+
+            token = password;
+            sessionStorage.setItem('adminToken', token);
+
+            // Test the token by fetching submissions
+            fetch(`${API_BASE}/api/submissions`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    throw new Error('Unauthorized');
+                })
+                .then(data => {
+                    errorEl.classList.add('hidden');
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('dashboardSection').classList.remove('hidden');
+                    document.getElementById('studentIdsSection').classList.remove('hidden');
+                    document.getElementById('loginStatus').textContent = 'Logged in';
+                    document.getElementById('logoutBtn').classList.remove('hidden');
+                    submissions = data;
+                    renderTable();
+                    renderStudentIds();
+                })
+                .catch(err => {
+                    token = '';
+                    sessionStorage.removeItem('adminToken');
+                    errorEl.classList.remove('hidden');
+                    errorEl.textContent = 'Invalid password';
+                });
+        }
+
+        function logout() {
+            token = '';
+            sessionStorage.removeItem('adminToken');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('studentIdsSection').classList.add('hidden');
+            document.getElementById('loginStatus').textContent = 'Not logged in';
+            document.getElementById('logoutBtn').classList.add('hidden');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function refreshData() {
+            fetch(`${API_BASE}/api/submissions`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) { logout(); return; }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data) {
+                        submissions = data;
+                        renderTable();
+                    }
+                });
+        }
+
+        function approveSubmission(id) {
+            fetch(`${API_BASE}/api/approve`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ id: id, action: 'approve' })
+            })
+            .then(res => res.json())
+            .then(() => refreshData());
+        }
+
+        function rejectSubmission(id) {
+            fetch(`${API_BASE}/api/approve`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ id: id, action: 'reject' })
+            })
+            .then(res => res.json())
+            .then(() => refreshData());
+        }
+
+        function shareLink(sub) {
+            if (sub.status !== 'approved' || !sub.token) {
+                alert('This submission has not been approved yet.');
+                return;
+            }
+            const downloadUrl = `${window.location.origin}/download.html?token=${sub.token}`;
+            navigator.clipboard.writeText(downloadUrl).then(() => {
+                alert(`✅ Download link copied to clipboard!\n\n${downloadUrl}`);
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = downloadUrl;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert(`✅ Download link copied to clipboard!\n\n${downloadUrl}`);
+            });
+        }
+
+        function formatDate(isoStr) {
+            if (!isoStr) return '-';
+            const d = new Date(isoStr);
+            return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('submissionsBody');
+
+            if (submissions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-gray-400">No submissions yet</td></tr>';
+                document.getElementById('totalCount').textContent = '0';
+                document.getElementById('pendingCount').textContent = '0';
+                document.getElementById('approvedCount').textContent = '0';
+                document.getElementById('rejectedCount').textContent = '0';
+                return;
+            }
+
+            let html = '';
+            let total = 0, pending = 0, approved = 0, rejected = 0;
+
+            submissions.forEach(sub => {
+                total++;
+                if (sub.status === 'pending') pending++;
+                else if (sub.status === 'approved') approved++;
+                else if (sub.status === 'rejected') rejected++;
+
+                const statusColors = {
+                    'pending': 'bg-amber-100 text-amber-700',
+                    'approved': 'bg-emerald-100 text-emerald-700',
+                    'rejected': 'bg-red-100 text-red-700'
+                };
+                const statusBadge = `<span class="inline-block px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[sub.status] || 'bg-gray-100 text-gray-600'}">${sub.status}</span>`;
+
+                html += `<tr class="border-b border-gray-50 hover:bg-gray-50/50">`;
+                html += `<td class="px-4 py-3 whitespace-nowrap text-gray-500 text-xs">${formatDate(sub.created_at)}</td>`;
+                html += `<td class="px-4 py-3 font-medium text-[#1e293b]">${sub.name}</td>`;
+                html += `<td class="px-4 py-3 text-gray-600">${sub.email}</td>`;
+                html += `<td class="px-4 py-3 text-gray-600">${sub.whatsapp || '-'}</td>`;
+                html += `<td class="px-4 py-3 text-gray-600 max-w-[180px] truncate" title="${sub.transaction_id || ''}">${sub.transaction_id || '-'}</td>`;
+                html += `<td class="px-4 py-3">${statusBadge}</td>`;
+                html += `<td class="px-4 py-3">`;
+
+                if (sub.status === 'pending') {
+                    html += `<div class="flex gap-2">`;
+                    html += `<button onclick="approveSubmission('${sub.id}')" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Approve</button>`;
+                    html += `<button onclick="rejectSubmission('${sub.id}')" class="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Reject</button>`;
+                    html += `</div>`;
+                } else if (sub.status === 'approved') {
+                    html += `<button onclick='shareLink(${JSON.stringify(sub)})' class="bg-[#046bd2] hover:bg-[#045cb4] text-white text-xs font-medium px-3 py-1.5 rounded-lg">Manual Share</button>`;
+                } else {
+                    html += `<span class="text-gray-400 text-xs">Rejected</span>`;
+                }
+
+                html += `</td></tr>`;
+            });
+
+            tbody.innerHTML = html;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('approvedCount').textContent = approved;
+            document.getElementById('rejectedCount').textContent = rejected;
+        }
+
+        // Auto-refresh if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            if (token) {
+                fetch(`${API_BASE}/api/submissions`, { headers: getAuthHeaders() })
+                    .then(res => {
+                        if (res.ok) return res.json();
+                        throw new Error('Unauthorized');
+                    })
+                    .then(data => {
+                        document.getElementById('loginSection').classList.add('hidden');
+                        document.getElementById('dashboardSection').classList.remove('hidden');
+                        document.getElementById('studentIdsSection').classList.remove('hidden');
+                        document.getElementById('loginStatus').textContent = 'Logged in';
+                        document.getElementById('logoutBtn').classList.remove('hidden');
+                        submissions = data;
+                        renderTable();
+                        renderStudentIds();
+                    })
+                    .catch(() => {
+                        sessionStorage.removeItem('adminToken');
+                        token = '';
+                    });
+            }
+        });
+
+        // ──────── STUDENT IDS FUNCTIONS ────────
+
+        function renderStudentIds() {
+            fetch(`${API_BASE}/api/student-ids`, { headers: getAuthHeaders() })
+                .then(res => {
+                    if (!res.ok) return;
+                    return res.json();
+                })
+                .then(data => {
+                    if (!data) return;
+                    const tbody = document.getElementById('studentIdsBody');
+                    let html = '';
+
+                    data.forEach(entry => {
+                        const isUsed = entry.used;
+                        const statusBadge = isUsed
+                            ? '<span class="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">Used</span>'
+                            : '<span class="inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">Available</span>';
+
+                        const created = entry.created_at ? new Date(entry.created_at).toLocaleDateString() : '-';
+                        const usedAt = entry.used_at ? new Date(entry.used_at).toLocaleDateString() + ' ' + new Date(entry.used_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '-';
+
+                        html += `<tr class="border-b border-gray-50 hover:bg-gray-50/50">`;
+                        html += `<td class="px-4 py-3 font-mono font-medium text-[#1e293b]">${entry.id}</td>`;
+                        html += `<td class="px-4 py-3">${statusBadge}</td>`;
+                        html += `<td class="px-4 py-3 text-gray-500 text-xs">${created}</td>`;
+                        html += `<td class="px-4 py-3 text-gray-500 text-xs">${usedAt}</td>`;
+                        html += `<td class="px-4 py-3">`;
+                        if (isUsed) {
+                            html += `<button onclick="resetStudentId('${entry.id}')" class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-medium px-3 py-1.5 rounded-lg">Reset</button>`;
+                        } else {
+                            html += `<span class="text-gray-400 text-xs">—</span>`;
+                        }
+                        html += `</td></tr>`;
+                    });
+
+                    tbody.innerHTML = html;
+                });
+        }
+
+        function refreshStudentIds() {
+            renderStudentIds();
+        }
+
+        function resetStudentId(id) {
+            if (!confirm(`Reset Student ID ${id} to unused?`)) return;
+            fetch(`${API_BASE}/api/reset-student-id`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ student_id: id })
+            })
+            .then(res => res.json())
+            .then(() => renderStudentIds());
+        }
+    </script>
+
+    <style>
+        .btn-hover { transition: all 0.2s ease; }
+        .btn-hover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</body>
+</html>
