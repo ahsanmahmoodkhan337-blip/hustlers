@@ -1,0 +1,40 @@
+datasource db {
+  provider = "sqlite"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AccessRequest {
+  id              String           @id @default(uuid())
+  studentName     String
+  studentPhone    String           @unique // This is their ID used to log in
+  studentEmail    String
+  paymentMethod   String           // "Bank Islami", "EasyPaisa", "PayPal"
+  transactionId   String           @unique
+  isApproved      Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  stats           UserTypingStat[]
+}
+
+model UserTypingStat {
+  id              String        @id @default(uuid())
+  accessRequestId String
+  accessRequest   AccessRequest @relation(fields: [accessRequestId], references: [id], onDelete: Cascade)
+  caseName        String
+  wpm             Int
+  accuracy        Int
+  passed          Boolean
+  createdAt       DateTime      @default(now())
+}
+
+model Scenario {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  audioUrl    String
+  transcript  String
+  difficulty  String   @default("Medium") // "Easy", "Medium", "Hard"
+  createdAt   DateTime @default(now())
+}
