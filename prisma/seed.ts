@@ -104,14 +104,11 @@ async function main() {
   ]
 
   for (const scenario of scenarios) {
-    const existing = await prisma.scenario.findFirst({
-      where: { title: scenario.title }
+    await prisma.scenario.upsert({
+      where: { id: (await prisma.scenario.findFirst({ where: { title: scenario.title } }))?.id || '00000000-0000-0000-0000-000000000000' },
+      update: scenario,
+      create: scenario,
     });
-    if (!existing) {
-      await prisma.scenario.create({
-        data: scenario
-      });
-    }
   }
 
   console.log('Database seeded successfully!');
