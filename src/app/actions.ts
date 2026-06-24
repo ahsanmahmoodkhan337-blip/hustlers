@@ -221,6 +221,7 @@ export async function adminDenyRequest(id: string): Promise<ActionResponse> {
       where: { id },
     })
     revalidatePath('/')
+    revalidatePath('/admin')
     return { success: true, message: 'Request denied and removed successfully.' }
   } catch (error) {
     console.error('Error denying request:', error)

@@ -1,0 +1,5 @@
+e96981c feat: sync all 8 medical scenarios and audio assets to production
+5a00024 Add vercel CLI to dependencies
+c926cd7 chore: definitively remove dev.db and fix .gitignore
+aa561af chore: update site metadata
+9203e63 chore: remove dev.db and fix .gitignore

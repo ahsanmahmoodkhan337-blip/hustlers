@@ -65,6 +65,41 @@ async function main() {
       audioUrl: '/audio/pediatric_checkup.mp3',
       transcript: 'The patient is a 4-year-old male who presents today with his mother for a well-child checkup. The mother reports that the child is active, eating well, and meeting all developmental milestones. On physical examination, the child is well-nourished and in no acute distress. Immunizations are up to date, and growth charts show both height and weight are tracking along the 65th percentile.',
       difficulty: 'Easy'
+    },
+    {
+      title: 'Neurology - Migraine Management',
+      description: 'A 34-year-old female with a long history of chronic migraines presents for a medication review.',
+      audioUrl: '/audio/neurology_migraine.mp3',
+      transcript: 'The patient is a 34-year-old female with a long-standing history of chronic migraines, presenting today for a follow-up and medication review. She reports that her headache frequency has increased to approximately three times per week over the last month. The headaches are typically unilateral, throbbing in nature, and accompanied by photophobia and phonophobia. She has been using Sumatriptan as an abortive therapy with moderate success but is requesting a more effective prophylactic regimen. We discussed starting Topiramate at a low dose and gradually titrating up. She was advised on potential side effects and the importance of maintaining a headache diary. We will re-evaluate her progress in six weeks.',
+      difficulty: 'Medium'
+    },
+    {
+      title: 'Orthopedic Surgery - Knee Osteoarthritis',
+      description: 'Consultation for a 62-year-old patient with persistent bilateral knee pain.',
+      audioUrl: '/audio/ortho_knee.mp3',
+      transcript: 'The patient is a 62-year-old male presenting with a two-year history of worsening bilateral knee pain, right greater than left. He describes the pain as a dull ache that is aggravated by prolonged standing and climbing stairs. He has tried conservative management including physical therapy and over-the-counter anti-inflammatories without significant relief. Physical examination reveals crepitus and limited range of motion in both knees. Radiographs demonstrate significant joint space narrowing and osteophyte formation consistent with Grade 3 osteoarthritis. We discussed the options of intra-articular corticosteroid injections versus proceeding with a total knee arthroplasty. The patient has elected to start with a trial of injections today.',
+      difficulty: 'Easy'
+    },
+    {
+      title: 'Gastroenterology - GERD Follow-up',
+      description: 'Follow-up for a patient with chronic gastroesophageal reflux disease.',
+      audioUrl: '/audio/gi_gerd.mp3',
+      transcript: 'This 45-year-old male returns for follow-up of gastroesophageal reflux disease. He has been taking Omeprazole 20 mg daily with good control of his symptoms, including heartburn and regurgitation. He denies any dysphagia, weight loss, or change in bowel habits. His last upper endoscopy, performed one year ago, showed mild esophagitis but was negative for Barrett’s esophagus. We will continue his current dose of Omeprazole and encouraged him to follow dietary modifications, such as avoiding spicy foods and not eating late at night. He is scheduled for a follow-up endoscopy in two years.',
+      difficulty: 'Medium'
+    },
+    {
+      title: 'Dermatology - Eczema Evaluation',
+      description: 'A young adult with a flare-up of atopic dermatitis.',
+      audioUrl: '/audio/derm_eczema.mp3',
+      transcript: 'The patient is a 19-year-old male presenting with a flare-up of atopic dermatitis involving the flexural surfaces of his elbows and knees. He reports significant pruritus that interferes with his sleep. On examination, there are erythematous, excoriated plaques in the classic distribution. There is no evidence of secondary bacterial infection. We will prescribe a medium-potency topical corticosteroid for the active lesions and emphasized the importance of regular use of emollients and gentle skin care. He was also advised to avoid known triggers and to return if there is no improvement within two weeks.',
+      difficulty: 'Easy'
+    },
+    {
+      title: 'Psychiatry - Anxiety Consultation',
+      description: 'Initial evaluation for generalized anxiety disorder.',
+      audioUrl: '/audio/psych_anxiety.mp3',
+      transcript: 'This 28-year-old female presents for an initial psychiatric evaluation due to persistent feelings of worry and tension that have been present for the past eight months. She describes difficulty concentrating, muscle tension, and sleep disturbance. These symptoms are causing significant distress and impairment in her occupational functioning. She denies any history of panic attacks or obsessive-compulsive behaviors. After a thorough clinical interview and review of symptoms, she meets the criteria for generalized anxiety disorder. We discussed a treatment plan involving both cognitive-behavioral therapy and the initiation of a selective serotonin reuptake inhibitor, specifically Sertraline. The patient is agreeable to this combined approach and will follow up in three weeks to monitor for response and side effects.',
+      difficulty: 'Hard'
     }
   ]
 
