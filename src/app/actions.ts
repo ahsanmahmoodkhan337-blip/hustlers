@@ -154,7 +154,12 @@ export async function getScenarios() {
       orderBy: { title: 'asc' },
     })
     return list.map(s => ({
-      ...s,
+      id: s.id,
+      title: s.title,
+      description: s.description,
+      audioUrl: s.audioUrl,
+      transcript: s.transcript,
+      difficulty: s.difficulty,
       createdAt: s.createdAt.toISOString()
     }))
   } catch (error) {
@@ -171,7 +176,11 @@ export async function getStudentStats(accessRequestId: string) {
       orderBy: { createdAt: 'desc' },
     })
     return list.map(s => ({
-      ...s,
+      id: s.id,
+      caseName: s.caseName,
+      wpm: s.wpm,
+      accuracy: s.accuracy,
+      passed: s.passed,
       createdAt: s.createdAt.toISOString()
     }))
   } catch (error) {
@@ -192,12 +201,21 @@ export async function adminGetRequests() {
       },
     })
     
-    // Explicitly serialize Date fields to avoid Client-side / Server-action transition serialization crashes
     return list.map(req => ({
-      ...req,
+      id: req.id,
+      studentName: req.studentName,
+      studentPhone: req.studentPhone,
+      studentEmail: req.studentEmail,
+      paymentMethod: req.paymentMethod,
+      transactionId: req.transactionId,
+      isApproved: req.isApproved,
       createdAt: req.createdAt.toISOString(),
       stats: req.stats.map(s => ({
-        ...s,
+        id: s.id,
+        caseName: s.caseName,
+        wpm: s.wpm,
+        accuracy: s.accuracy,
+        passed: s.passed,
         createdAt: s.createdAt.toISOString()
       }))
     }))
