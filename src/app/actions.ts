@@ -150,9 +150,13 @@ export async function submitTypingStat(data: {
 // 4. Fetch scenarios for the practice center
 export async function getScenarios() {
   try {
-    return await prisma.scenario.findMany({
+    const list = await prisma.scenario.findMany({
       orderBy: { title: 'asc' },
     })
+    return list.map(s => ({
+      ...s,
+      createdAt: s.createdAt.toISOString()
+    }))
   } catch (error) {
     console.error('Error fetching scenarios:', error)
     return []
@@ -162,10 +166,14 @@ export async function getScenarios() {
 // 5. Fetch student history stats
 export async function getStudentStats(accessRequestId: string) {
   try {
-    return await prisma.userTypingStat.findMany({
+    const list = await prisma.userTypingStat.findMany({
       where: { accessRequestId },
       orderBy: { createdAt: 'desc' },
     })
+    return list.map(s => ({
+      ...s,
+      createdAt: s.createdAt.toISOString()
+    }))
   } catch (error) {
     console.error('Error fetching student stats:', error)
     return []

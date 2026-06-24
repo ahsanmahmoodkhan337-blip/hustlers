@@ -20,7 +20,7 @@ type UserStat = {
   wpm: number
   accuracy: number
   passed: boolean
-  createdAt: Date
+  createdAt: string
 }
 
 interface StatsChartsProps {

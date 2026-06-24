@@ -20,7 +20,9 @@ import {
   BookOpen
 } from 'lucide-react'
 import { getScenarios, getStudentStats, submitTypingStat } from '../actions'
-import StatsCharts from './components/StatsCharts'
+import dynamic from 'next/dynamic'
+
+const StatsCharts = dynamic(() => import('./components/StatsCharts'), { ssr: false })
 
 type Scenario = {
   id: string
@@ -29,6 +31,7 @@ type Scenario = {
   audioUrl: string
   transcript: string
   difficulty: string
+  createdAt: string
 }
 
 type UserStat = {
@@ -37,7 +40,7 @@ type UserStat = {
   wpm: number
   accuracy: number
   passed: boolean
-  createdAt: Date
+  createdAt: string
 }
 
 export default function TypingMasterHub() {
@@ -749,7 +752,7 @@ export default function TypingMasterHub() {
           </div>
 
           {/* VISUAL TREND CHARTS */}
-          {/* {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />} */}
+          {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />}
 
           {/* STATS TABLE */}
           <div className="overflow-x-auto border border-slate-100 rounded-xl">
