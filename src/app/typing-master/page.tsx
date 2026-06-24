@@ -20,6 +20,7 @@ import {
   BookOpen
 } from 'lucide-react'
 import { getScenarios, getStudentStats, submitTypingStat } from '../actions'
+import StatsCharts from './components/StatsCharts'
 
 type Scenario = {
   id: string
@@ -746,6 +747,9 @@ export default function TypingMasterHub() {
               <span className="text-3xl font-extrabold text-emerald-600">{avgAccuracy}%</span>
             </div>
           </div>
+
+          {/* VISUAL TREND CHARTS */}
+          {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />}
 
           {/* STATS TABLE */}
           <div className="overflow-x-auto border border-slate-100 rounded-xl">
