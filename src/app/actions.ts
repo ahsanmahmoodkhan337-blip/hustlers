@@ -153,6 +153,7 @@ export async function getScenarios() {
     const list = await prisma.scenario.findMany({
       orderBy: { title: 'asc' },
     })
+    // Ensure all Date objects are converted to ISO strings for Next.js 15 serialization
     return list.map(s => ({
       id: s.id,
       title: s.title,
@@ -175,6 +176,7 @@ export async function getStudentStats(accessRequestId: string) {
       where: { accessRequestId },
       orderBy: { createdAt: 'desc' },
     })
+    // Explicitly serialize all fields to prevent Next.js 15 Date-related crashes
     return list.map(s => ({
       id: s.id,
       caseName: s.caseName,

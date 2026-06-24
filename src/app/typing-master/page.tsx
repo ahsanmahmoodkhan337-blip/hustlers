@@ -19,8 +19,14 @@ import {
   Check,
   BookOpen
 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { getScenarios, getStudentStats, submitTypingStat } from '../actions'
-import StatsCharts from './components/StatsCharts'
+
+// Robustly dynamic import the charts with SSR disabled to prevent recharts module-level window issues
+const StatsCharts = dynamic(() => import('./components/StatsCharts'), { 
+  ssr: false,
+  loading: () => <div className="h-64 w-full bg-slate-50 animate-pulse rounded-xl" />
+})
 
 type Scenario = {
   id: string

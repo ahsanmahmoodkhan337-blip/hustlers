@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import dynamic from 'next/dynamic'
 import {
   LineChart,
   Line,
@@ -27,7 +26,7 @@ interface StatsChartsProps {
   stats: UserStat[]
 }
 
-function StatsChartsComponent({ stats }: StatsChartsProps) {
+export default function StatsCharts({ stats }: StatsChartsProps) {
   if (stats.length === 0) return null
 
   // Prepare data for the charts, reversing to show chronological order
@@ -151,7 +150,3 @@ function StatsChartsComponent({ stats }: StatsChartsProps) {
     </div>
   )
 }
-
-// Export the component with SSR disabled to prevent recharts issues
-export default dynamic(() => Promise.resolve(StatsChartsComponent), { ssr: false })
-
