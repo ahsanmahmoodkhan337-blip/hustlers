@@ -20,9 +20,7 @@ import {
   BookOpen
 } from 'lucide-react'
 import { getScenarios, getStudentStats, submitTypingStat } from '../actions'
-import dynamic from 'next/dynamic'
-
-const StatsCharts = dynamic(() => import('./components/StatsCharts'), { ssr: false })
+import StatsCharts from './components/StatsCharts'
 
 type Scenario = {
   id: string

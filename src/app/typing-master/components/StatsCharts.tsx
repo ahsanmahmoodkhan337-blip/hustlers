@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import dynamic from 'next/dynamic'
 import {
   LineChart,
   Line,
@@ -9,7 +10,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
   AreaChart,
   Area
 } from 'recharts'
@@ -27,7 +27,7 @@ interface StatsChartsProps {
   stats: UserStat[]
 }
 
-export default function StatsCharts({ stats }: StatsChartsProps) {
+function StatsChartsComponent({ stats }: StatsChartsProps) {
   if (stats.length === 0) return null
 
   // Prepare data for the charts, reversing to show chronological order
@@ -151,3 +151,7 @@ export default function StatsCharts({ stats }: StatsChartsProps) {
     </div>
   )
 }
+
+// Export the component with SSR disabled to prevent recharts issues
+export default dynamic(() => Promise.resolve(StatsChartsComponent), { ssr: false })
+
