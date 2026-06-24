@@ -749,7 +749,7 @@ export default function TypingMasterHub() {
           </div>
 
           {/* VISUAL TREND CHARTS */}
-          {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />}
+          {/* {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />} */}
 
           {/* STATS TABLE */}
           <div className="overflow-x-auto border border-slate-100 rounded-xl">
