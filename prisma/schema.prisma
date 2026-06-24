@@ -1,32 +1,32 @@
-datasource db {
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+}
+
 model AccessRequest {
-  id              String           @id @default(uuid())
-  studentName     String
-  studentPhone    String           @unique // This is their ID used to log in
-  studentEmail    String
-  paymentMethod   String           // "Bank Islami", "EasyPaisa", "PayPal"
-  transactionId   String           @unique
-  isApproved      Boolean          @default(false)
-  createdAt       DateTime         @default(now())
-  stats           UserTypingStat[]
+  id            String           @id @default(uuid())
+  studentName   String
+  studentPhone  String           @unique
+  studentEmail  String
+  paymentMethod String
+  transactionId String           @unique
+  isApproved    Boolean          @default(false)
+  createdAt     DateTime         @default(now())
+  stats         UserTypingStat[]
 }
 
 model UserTypingStat {
   id              String        @id @default(uuid())
   accessRequestId String
-  accessRequest   AccessRequest @relation(fields: [accessRequestId], references: [id], onDelete: Cascade)
   caseName        String
   wpm             Int
   accuracy        Int
   passed          Boolean
   createdAt       DateTime      @default(now())
+  accessRequest   AccessRequest @relation(fields: [accessRequestId], references: [id], onDelete: Cascade)
 }
 
 model Scenario {
@@ -35,6 +35,6 @@ model Scenario {
   description String?
   audioUrl    String
   transcript  String
-  difficulty  String   @default("Medium") // "Easy", "Medium", "Hard"
+  difficulty  String   @default("Medium")
   createdAt   DateTime @default(now())
 }

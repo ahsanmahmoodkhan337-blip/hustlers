@@ -207,6 +207,7 @@ export async function adminApproveRequest(id: string): Promise<ActionResponse> {
       data: { isApproved: true },
     })
     revalidatePath('/')
+    revalidatePath('/admin')
     return { success: true, message: 'Request approved successfully!' }
   } catch (error) {
     console.error('Error approving request:', error)
