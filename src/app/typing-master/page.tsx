@@ -73,6 +73,21 @@ export default function TypingMasterHub() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const transcriptContainerRef = useRef<HTMLDivElement | null>(null)
+
+  // Auto-scroll transcript container as user types
+  useEffect(() => {
+    if (transcriptContainerRef.current) {
+      const activeChar = transcriptContainerRef.current.querySelector('.bg-sky-100')
+      if (activeChar) {
+        activeChar.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'nearest'
+        })
+      }
+    }
+  }, [typedText])
 
   // 1. Load Student Session from Cookies & Fetch Database Elements
   useEffect(() => {
