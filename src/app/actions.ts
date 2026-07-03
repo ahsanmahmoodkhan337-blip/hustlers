@@ -150,19 +150,9 @@ export async function submitTypingStat(data: {
 // 4. Fetch scenarios for the practice center
 export async function getScenarios() {
   try {
-    const list = await prisma.scenario.findMany({
+    return await prisma.scenario.findMany({
       orderBy: { title: 'asc' },
     })
-    // Ensure all Date objects are converted to ISO strings for Next.js 15 serialization
-    return list.map(s => ({
-      id: s.id,
-      title: s.title,
-      description: s.description,
-      audioUrl: s.audioUrl,
-      transcript: s.transcript,
-      difficulty: s.difficulty,
-      createdAt: s.createdAt.toISOString()
-    }))
   } catch (error) {
     console.error('Error fetching scenarios:', error)
     return []
@@ -172,19 +162,10 @@ export async function getScenarios() {
 // 5. Fetch student history stats
 export async function getStudentStats(accessRequestId: string) {
   try {
-    const list = await prisma.userTypingStat.findMany({
+    return await prisma.userTypingStat.findMany({
       where: { accessRequestId },
       orderBy: { createdAt: 'desc' },
     })
-    // Explicitly serialize all fields to prevent Next.js 15 Date-related crashes
-    return list.map(s => ({
-      id: s.id,
-      caseName: s.caseName,
-      wpm: s.wpm,
-      accuracy: s.accuracy,
-      passed: s.passed,
-      createdAt: s.createdAt.toISOString()
-    }))
   } catch (error) {
     console.error('Error fetching student stats:', error)
     return []
@@ -203,21 +184,12 @@ export async function adminGetRequests() {
       },
     })
     
+    // Explicitly serialize Date fields to avoid Client-side / Server-action transition serialization crashes
     return list.map(req => ({
-      id: req.id,
-      studentName: req.studentName,
-      studentPhone: req.studentPhone,
-      studentEmail: req.studentEmail,
-      paymentMethod: req.paymentMethod,
-      transactionId: req.transactionId,
-      isApproved: req.isApproved,
+      ...req,
       createdAt: req.createdAt.toISOString(),
       stats: req.stats.map(s => ({
-        id: s.id,
-        caseName: s.caseName,
-        wpm: s.wpm,
-        accuracy: s.accuracy,
-        passed: s.passed,
+        ...s,
         createdAt: s.createdAt.toISOString()
       }))
     }))

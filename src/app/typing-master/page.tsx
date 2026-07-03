@@ -19,14 +19,7 @@ import {
   Check,
   BookOpen
 } from 'lucide-react'
-import dynamic from 'next/dynamic'
 import { getScenarios, getStudentStats, submitTypingStat } from '../actions'
-
-// Robustly dynamic import the charts with SSR disabled to prevent recharts module-level window issues
-const StatsCharts = dynamic(() => import('./components/StatsCharts'), { 
-  ssr: false,
-  loading: () => <div className="h-64 w-full bg-slate-50 animate-pulse rounded-xl" />
-})
 
 type Scenario = {
   id: string
@@ -35,7 +28,6 @@ type Scenario = {
   audioUrl: string
   transcript: string
   difficulty: string
-  createdAt: string
 }
 
 type UserStat = {
@@ -44,7 +36,7 @@ type UserStat = {
   wpm: number
   accuracy: number
   passed: boolean
-  createdAt: string
+  createdAt: Date
 }
 
 export default function TypingMasterHub() {
@@ -754,9 +746,6 @@ export default function TypingMasterHub() {
               <span className="text-3xl font-extrabold text-emerald-600">{avgAccuracy}%</span>
             </div>
           </div>
-
-          {/* VISUAL TREND CHARTS */}
-          {statsHistory.length > 0 && <StatsCharts stats={statsHistory} />}
 
           {/* STATS TABLE */}
           <div className="overflow-x-auto border border-slate-100 rounded-xl">
