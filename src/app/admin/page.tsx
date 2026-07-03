@@ -57,8 +57,7 @@ export default function AdminPage() {
     setAuthError(null)
 
     const cleanPass = password.trim()
-    // Support common evaluation passwords for absolute reliability
-    if (cleanPass === 'admin' || cleanPass === 'admin123' || cleanPass === 'HHAdmin2026' || cleanPass === 'HH-Admin-2026') {
+    if (cleanPass === 'Khankhail@1122') {
       setIsAuthenticated(true)
       // Save auth state to session storage to persist across soft-reloads
       sessionStorage.setItem('admin_auth', 'true')
@@ -186,7 +185,7 @@ export default function AdminPage() {
               <input
                 type="password"
                 required
-                placeholder="e.g. admin123"
+                placeholder="Administrator Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-slate-700 bg-slate-950 text-white placeholder-slate-600 focus:outline-hidden focus:border-sky-500 focus:ring-1 focus:ring-sky-500 text-sm tracking-widest"
