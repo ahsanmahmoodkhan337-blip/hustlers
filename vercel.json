@@ -1,0 +1,4 @@
+{
+  "buildCommand": "rm -rf .next && NEXT_TELEMETRY_DISABLED=1 npx next build --no-lint",
+  "installCommand": "npm install --legacy-peer-deps"
+}
