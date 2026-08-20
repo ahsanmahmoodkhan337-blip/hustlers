@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/db'
 import { revalidatePath } from 'next/cache'
+import { normalizePhone } from '@/lib/phone'
 
 // Define action result types
 export type ActionResponse<T = unknown> = {
@@ -20,7 +21,8 @@ export async function submitAccessRequest(data: {
   transactionId: string
 }): Promise<ActionResponse> {
   try {
-    const { studentName, studentPhone, studentEmail, paymentMethod, transactionId } = data
+    const { studentName, studentEmail, paymentMethod, transactionId } = data
+    const studentPhone = normalizePhone(data.studentPhone)
 
     if (!studentName || !studentPhone || !studentEmail || !paymentMethod || !transactionId) {
       return { success: false, message: 'All 5 fields are required to submit an access request.' }
@@ -74,8 +76,10 @@ export async function submitAccessRequest(data: {
 }
 
 // 2. Student Login verification
-export async function studentLogin(studentPhone: string): Promise<ActionResponse<{ id: string; name: string; phone: string }>> {
+export async function studentLogin(rawPhone: string): Promise<ActionResponse<{ id: string; name: string; phone: string }>> {
   try {
+    const studentPhone = normalizePhone(rawPhone)
+
     if (!studentPhone) {
       return { success: false, message: 'Phone Number is required.' }
     }
@@ -84,14 +88,23 @@ export async function studentLogin(studentPhone: string): Promise<ActionResponse
       where: { studentPhone },
     })
 
-    if (!request) {
+    // Fallback: if not found with normalized format, try the "+92..." prefix format
+    // (for legacy records stored before normalization was implemented)
+    let foundRequest = request
+    if (!foundRequest && studentPhone.startsWith('92')) {
+      foundRequest = await prisma.accessRequest.findUnique({
+        where: { studentPhone: '+' + studentPhone },
+      })
+    }
+
+    if (!foundRequest) {
       return {
         success: false,
         message: 'No access request found for this Phone Number. Please submit an access request first using the form above.',
       }
     }
 
-    if (!request.isApproved) {
+    if (!foundRequest.isApproved) {
       return {
         success: false,
         pending: true,
@@ -103,9 +116,9 @@ export async function studentLogin(studentPhone: string): Promise<ActionResponse
       success: true,
       message: 'Logged in successfully!',
       data: {
-        id: request.id,
-        name: request.studentName,
-        phone: request.studentPhone,
+        id: foundRequest.id,
+        name: foundRequest.studentName,
+        phone: foundRequest.studentPhone,
       },
     }
   } catch (error) {
