@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { prisma } from '../src/lib/db'
 
 async function main() {
@@ -120,6 +121,86 @@ async function main() {
 [OBJECTIVE]: On mental status examination, the patient is alert and oriented. Her speech is at a normal rate and volume. Her mood is described as "anxious" with a congruent, constricted affect. Her thought process is linear and goal-directed. Insight and judgment are fair.
 [ASSESSMENT]: Generalized Anxiety Disorder (GAD).
 [PLAN]: We discussed a treatment plan involving both cognitive-behavioral therapy and the initiation of a selective serotonin reuptake inhibitor. We will start Sertraline 25 mg daily for one week, then increase to 50 mg. The patient is agreeable to this approach and will follow up in three weeks to monitor for therapeutic response and potential side effects.`,
+      difficulty: 'Hard'
+    },
+    {
+      title: 'Pulmonology - COPD Exacerbation',
+      description: 'An elderly smoker presents with worsening dyspnea and a change in sputum production.',
+      audioUrl: '/audio/pulm_copd_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 68-year-old male with a 40-pack-year smoking history who presents with a three-day history of worsening dyspnea and increased sputum production. He reports his baseline breathlessness has progressed to shortness of breath even at rest. His sputum has changed from clear to yellow-green and has increased in volume. He denies fever, hemoptysis, or chest pain, but notes increased use of his rescue inhaler without relief.
+[OBJECTIVE]: The patient is in moderate respiratory distress, speaking in short phrases. Respiratory rate is 26, oxygen saturation is 88 percent on room air, and heart rate is 104. Lung examination reveals diffuse expiratory wheezes bilaterally with a prolonged expiratory phase and decreased breath sounds at the bases. There is mild accessory muscle use. No cyanosis or peripheral edema noted.
+[ASSESSMENT]: Acute exacerbation of chronic obstructive pulmonary disease with hypoxemia and a likely infectious trigger.
+[PLAN]: The patient will be admitted for oxygen therapy, nebulized bronchodilators, and systemic corticosteroids. A chest radiograph and sputum culture have been ordered. We will initiate empiric antibiotics and continue his long-acting bronchodilators. Smoking cessation counseling will be reinforced prior to discharge.`,
+      difficulty: 'Hard'
+    },
+    {
+      title: 'Endocrinology - Diabetes Type 2 Follow-up',
+      description: 'Routine diabetes follow-up with hemoglobin A1c review and medication adjustment.',
+      audioUrl: '/audio/endo_diabetes_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 54-year-old male with type 2 diabetes mellitus who presents for routine follow-up. He reports adherence to his Metformin but admits to frequent snacking and limited physical activity. He denies polyuria, polydipsia, or blurry vision. He reports occasional numbness in his feet but no ulcerations or infections.
+[OBJECTIVE]: Blood pressure is 138 over 86. Weight is stable. Recent laboratory studies reveal a hemoglobin A1c of 8.4 percent, up from 7.6 percent three months ago. Fasting glucose is 168 milligrams per deciliter. Monofilament examination reveals mildly reduced sensation in both feet.
+[ASSESSMENT]: Type 2 diabetes mellitus with suboptimal glycemic control and early peripheral neuropathy.
+[PLAN]: We will titrate Metformin to 1000 milligrams twice daily and add a GLP-1 receptor agonist. The patient was referred for diabetic foot care and nutritional counseling. We will recheck hemoglobin A1c in three months and monitor renal function.`,
+      difficulty: 'Medium'
+    },
+    {
+      title: 'Rheumatology - Rheumatoid Arthritis',
+      description: 'A patient with symmetric joint pain and morning stiffness undergoes a DMARD review.',
+      audioUrl: '/audio/rheum_ra_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 47-year-old female with rheumatoid arthritis who presents for medication review. She reports persistent pain and swelling in the small joints of both hands and wrists, with morning stiffness lasting over an hour. She has been on Methotrexate for six months but feels her symptoms are only partially controlled. She denies fever, rash, or other systemic symptoms.
+[OBJECTIVE]: Examination reveals symmetric swelling and tenderness of the metacarpophalangeal and proximal interphalangeal joints. There is mild ulnar deviation but no nodules or deformities. Range of motion is limited by pain. Inflammatory markers are elevated with an erythrocyte sedimentation rate of 42 and C-reactive protein of 18.
+[ASSESSMENT]: Moderately active rheumatoid arthritis despite Methotrexate monotherapy.
+[PLAN]: We will continue Methotrexate and add a TNF inhibitor. Baseline screening for tuberculosis and hepatitis was ordered prior to initiating biologic therapy. The patient will follow up in eight weeks to assess treatment response and monitor for adverse effects.`,
+      difficulty: 'Medium'
+    },
+    {
+      title: 'ENT - Chronic Sinusitis',
+      description: 'A patient with recurrent sinus infections and persistent facial pressure.',
+      audioUrl: '/audio/ent_sinusitis_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 33-year-old female presenting with a six-month history of nasal congestion, facial pressure, and postnasal drip. She reports recurrent sinus infections that have required multiple courses of antibiotics. Symptoms are worse in the morning and when she lies down. She denies fever, epistaxis, or severe headaches.
+[OBJECTIVE]: Anterior rhinoscopy reveals edematous nasal mucosa with mucopurulent discharge. There is tenderness over the maxillary sinuses bilaterally. No nasal polyps or masses are visualized. The remainder of the head and neck exam is unremarkable.
+[ASSESSMENT]: Chronic rhinosinusitis with recurrent acute exacerbations.
+[PLAN]: We will initiate a course of intranasal corticosteroids with daily saline irrigation. A CT scan of the sinuses has been ordered to evaluate for anatomic obstruction. If medical therapy fails, the patient will be referred for consideration of functional endoscopic sinus surgery.`,
+      difficulty: 'Easy'
+    },
+    {
+      title: 'Urology - BPH Evaluation',
+      description: 'An older male presents with urinary frequency and a weak stream.',
+      audioUrl: '/audio/uro_bph_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 64-year-old male presenting with a one-year history of progressive urinary symptoms. He reports urinary frequency, nocturia, and hesitancy with a weak urinary stream. He denies dysuria, hematuria, or fever. Symptoms have begun to interfere with his sleep and daily activities.
+[OBJECTIVE]: Digital rectal examination reveals an enlarged, smooth, symmetric prostate without nodules or induration. Urinalysis is negative for infection or blood. Post-void residual volume measured by bladder ultrasound is 90 milliliters.
+[ASSESSMENT]: Benign prostatic hyperplasia with moderate lower urinary tract symptoms.
+[PLAN]: We will initiate therapy with an alpha blocker to relax the prostate and bladder neck. The patient was counseled on limiting evening fluid intake and avoiding caffeine. We will reassess symptom response in six weeks and consider a 5-alpha-reductase inhibitor if symptoms persist.`,
+      difficulty: 'Easy'
+    },
+    {
+      title: 'Ophthalmology - Cataract Assessment',
+      description: 'Gradual vision loss and glare in a patient referred for cataract evaluation.',
+      audioUrl: '/audio/ophtho_cataract_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 71-year-old female who presents with a one-year history of gradual, painless vision loss in both eyes. She reports difficulty with night driving due to glare and halos around lights. Reading has become increasingly difficult. She denies eye pain, redness, or flashes of light.
+[OBJECTIVE]: Visual acuity is 20 over 60 in the right eye and 20 over 80 in the left eye, correctable only minimally with refraction. Slit lamp examination reveals significant nuclear sclerotic cataracts in both eyes, more advanced on the left. Intraocular pressures are normal. Dilated fundus examination is unremarkable.
+[ASSESSMENT]: Bilateral visually significant cataracts.
+[PLAN]: The patient is a candidate for cataract extraction with intraocular lens implantation. We discussed the risks and benefits of surgery, and she wishes to proceed with the left eye first. Preoperative measurements and biometry have been ordered.`,
+      difficulty: 'Easy'
+    },
+    {
+      title: 'Oncology - Breast Cancer Surveillance',
+      description: 'Post-lumpectomy follow-up with mammogram review for a breast cancer survivor.',
+      audioUrl: '/audio/onco_breast_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 58-year-old female with a history of early-stage breast cancer treated with lumpectomy and radiation two years ago. She presents for routine surveillance and reports no new breast lumps, nipple discharge, or pain. She has been adherent to her endocrine therapy. She denies bone pain, weight loss, or other constitutional symptoms.
+[OBJECTIVE]: Breast examination reveals no palpable masses, skin changes, or axillary lymphadenopathy. Recent surveillance mammogram demonstrates no evidence of recurrent or new malignancy. No suspicious calcifications or architectural distortion are noted.
+[ASSESSMENT]: No evidence of recurrent breast cancer on surveillance.
+[PLAN]: The patient will continue endocrine therapy as prescribed and annual surveillance mammography. She was counseled to report any new symptoms promptly. Bone health monitoring will continue given her ongoing endocrine therapy.`,
+      difficulty: 'Medium'
+    },
+    {
+      title: 'Infectious Disease - Tuberculosis Screening',
+      description: 'A patient with a positive PPD undergoes evaluation for latent tuberculosis.',
+      audioUrl: '/audio/id_tb_v3.mp3',
+      transcript: `[SUBJECTIVE]: The patient is a 29-year-old male healthcare worker who presents after a positive tuberculin skin test on routine employee screening. He reports no cough, fever, night sweats, weight loss, or hemoptysis. He has no known exposure to active tuberculosis but recently emigrated from a region with high tuberculosis prevalence. He denies any prior treatment for tuberculosis.
+[OBJECTIVE]: The patient is afebrile with normal vital signs. Pulmonary examination is clear to auscultation bilaterally. There is no lymphadenopathy. A chest radiograph is normal with no evidence of active disease, cavitation, or hilar adenopathy.
+[ASSESSMENT]: Latent tuberculosis infection with a positive tuberculin skin test and negative chest radiograph.
+[PLAN]: We discussed the risks and benefits of treatment for latent tuberculosis. The patient will begin a course of isoniazid with pyridoxine supplementation. Baseline liver function tests were ordered and will be monitored monthly. The patient was counseled on signs of hepatotoxicity and the importance of medication adherence.`,
       difficulty: 'Hard'
     }
   ]
